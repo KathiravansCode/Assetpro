@@ -1,0 +1,457 @@
+<?php
+session_start();
+include("include/dbconnect.php");
+include("encrypt_msg.php");
+extract($_POST);
+$msg="";
+			 
+$rdate=date("d-m-Y");
+			 				
+
+               
+                if (isset($btn))
+				{
+                    $qry = mysqli_query($connect,"select max(id) as maxid from vb_register");
+                    $rs=mysqli_fetch_array($qry);
+                    $id = $rs['maxid']+1;
+$key=$uname;
+$fname1=fnEncrypt($fname,$key);
+$lname1=fnEncrypt($lname,$key);
+$gender1=fnEncrypt($gender,$key);
+$dob1=fnEncrypt($dob,$key);
+$address1=fnEncrypt($address,$key);
+$address21=fnEncrypt($address2,$key);
+$pincode1=fnEncrypt($pincode,$key);
+$city1=fnEncrypt($city,$key);
+$state1=fnEncrypt($state,$key);
+$country1=fnEncrypt($country,$key);
+$email1=fnEncrypt($email,$key);
+$mobile1=fnEncrypt($mobile,$key);
+$mobile21=fnEncrypt($mobile2,$key);
+$landline1=fnEncrypt($landline,$key);
+$adhar1=fnEncrypt($adhar,$key);
+$voter1=fnEncrypt($voter,$key);
+$pancard1=fnEncrypt($pancard,$key);
+$driving1=fnEncrypt($driving,$key);
+$pass1=fnEncrypt($pass,$key);
+$rdate1=fnEncrypt($rdate,$key);
+					$ins = mysqli_query($connect,"insert into vb_register(id,fname,lname,gender,dob,address,address2,pincode,city,state,country,email,mobile,mobile2,landline,adhar,voter,pancard,driving,uname,pass,last_date,rdate) values($id,'$fname1','$lname1','$gender1','$dob1','$address1','$address21','$pincode1','$city1','$state1','$country1','$email1','$mobile1','$mobile21','$landline1','$adhar1','$voter1','$pancard1','$driving1','$uname','$pass1','$rdate1','$rdate1')");
+                    
+                    
+						if($ins)
+						{
+						////////////////////
+						$_SESSION['id']=$id;
+				                                     
+								?>
+							<script language="javascript">
+							alert("Registered Successfully");
+							window.location.href="index.php";
+							</script>
+							<?php
+							}
+							else
+							{
+							$msg="This user has already exist!";
+							}
+					
+}
+?>
+<html>
+<head>
+	<title><?php include("include/title2.php"); ?></title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Cryptocurrency Landing Page Template">
+	<meta name="keywords" content="cryptocurrency, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/themify-icons.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+
+
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+<script language="javascript">
+  function validate()
+  {
+  	if(document.form1.fname.value=="")
+	{
+	alert("Enter the Name");
+	document.form1.fname.focus();
+	return false;
+	}
+	if(document.form1.address.value=="")
+	{
+	alert("Enter the Address");
+	document.form1.address.focus();
+	return false;
+	}
+	if(document.form1.mobile.value=="")
+	{
+	alert("Enter the Contact No.");
+	document.form1.mobile.focus();
+	return false;
+	}
+	if (isNaN(document.form1.mobile.value))
+                {
+                    alert("Invalid Contact No.");
+                    document.form1.mobile.select();
+                    return false;
+                }
+				if (document.form1.mobile.value.length != 10)
+                {
+                    alert("10 digists only allowed!!");
+                    document.form1.mobile.select();
+                    return false;
+                }
+	if(document.form1.email.value=="")
+	{
+	alert("Enter the E-mail");
+	document.form1.email.focus();
+	return false;
+	}
+	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.form1.email.value))  
+				  {  
+					//return (true)  
+				  }  
+				  else
+				  {
+					alert("You have entered an invalid email address!");
+					document.form1.email.select();
+					return false; 
+				  }
+	
+	if(document.form1.uname.value=="")
+	{
+	alert("Enter the Username");
+	document.form1.uname.focus();
+	return false;
+	}
+	if(document.form1.pass.value=="")
+	{
+	alert("Enter the Password");
+	document.form1.pass.focus();
+	return false;
+	}
+	if(document.form1.cpass.value=="")
+	{
+	alert("Enter the Confirm Password");
+	document.form1.cpass.focus();
+	return false;
+	}
+	if(document.form1.pass.value!=document.form1.cpass.value)
+	{
+	alert("Password not match!");
+	document.form1.pass.select();
+	return false;
+	}
+	var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/;
+	if(paswd.test(document.form1.pass.value)) 
+	{ 
+	
+	}
+	else
+	{
+	alert("Password required for Special characters and numbers,alphabets");
+	document.form1.pass.focus();
+	return false;
+	}
+	
+return true;
+  }
+  </script>
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section clearfix">
+		<div class="container-fluid">
+			<a href="index.html" class="site-logo">
+				<img src="img/cbr2.png" alt="">
+			</a>
+			<div class="responsive-bar"><i class="fa fa-bars"></i></div>
+			<a href="" class="user"><i class="fa fa-user"></i></a>
+			<a href="register.php" class="site-btn">Sign Up Free</a>
+			<nav class="main-menu">
+				<ul class="menu-list">
+					<li><a href="index.php">Home</a></li>
+					<li><a href="">About</a></li>
+					<li><a href="">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+
+
+	<!-- Page info section -->
+	<section class="page-info-section">
+		<div class="container">
+			<h2>New User</h2>
+			<div class="site-beradcamb">
+				<a href="">Home</a>
+				<!--<span><i class="fa fa-angle-right"></i> </span>-->
+			</div>
+		</div>
+	</section>
+	<!-- Page info end -->
+
+
+
+	<!-- Contact section -->
+	<section class="contact-page spad">
+		<div class="container">
+		<h3>User Registration</h3>
+			<div class="row">
+				<div class="col-lg-7">
+					<form class="contact-form" name="form1" method="post">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="fname" placeholder="First Name">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="lname" placeholder="Last Name">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+							
+								<div class="contact-type">
+								<label class="ct-label">
+										<input type="radio" name="gender" value="Male" checked="checked"> Male
+										 <span class="checkmark"></span>
+									</label>
+								<label class="ct-label">
+										<input type="radio" name="gender" value="Female"> Female
+										 <span class="checkmark"></span>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="date" name="dob" placeholder="D.O.B">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="address" placeholder="Temp. Address">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="address2" placeholder="Permanent Address">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="pincode" placeholder="Pincode">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="city" placeholder="City">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="state" placeholder="State">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="country" placeholder="Country">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="email" name="email" placeholder="Email">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="mobile" maxlength="10" placeholder="Mobile Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="mobile2" maxlength="10" placeholder="Alternate Mobile Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="landline" placeholder="Land Line Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="adhar" maxlength="12" placeholder="Aadhar Card Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="voter" placeholder="Voter ID">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="pancard" placeholder="PAN Card Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="driving" placeholder="Driving License Number">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="text" name="uname" placeholder="Username">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="password" name="pass" placeholder="Password">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="check-form" type="password" name="cpass" placeholder="Confirm Password">
+									<span><i class="ti-check"></i></span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<button type="submit" name="btn" class="site-btn sb-gradients mt-4" onClick="return validate()">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-lg-5 mt-5 mt-lg-0">
+					<img src="img/cbr5.png" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Contact section end -->
+
+
+	<!-- Newsletter section -->
+	<section class="newsletter-section gradient-bg">
+		<div class="container text-white">
+			<div class="row">
+				<div class="col-lg-7 newsletter-text">
+					<h2>Cloud Information</h2>
+					<p>The user has store the information into cloud. Information has send to alloted persons after user's death.</p>
+				</div>
+				<div class="col-lg-5 col-md-8 offset-lg-0 offset-md-2">
+					<!--<form class="newsletter-form">
+						<input type="text" placeholder="Enter your email">
+						<button>Get Started</button>
+					</form>-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Newsletter section end -->
+
+
+
+	<!-- Blog section -->
+	
+	<!-- Blog section end -->
+
+
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row spad">
+				<div class="col-md-6 col-lg-3 footer-widget">
+					<img src="img/cbr2.png" class="mb-4" alt="">
+					<p>Create an artificial brain that can think, alerts, take decision, Store and Retrieve Information from Cloud.</p>
+					<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+<?php include("include/title2.php"); ?> <a href="https://colorlib.com" target="_blank"></a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+				</div>
+				<div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
+					<h5 class="widget-title">Resources</h5>
+					<ul>
+						<li><a href="index.php">Home</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
+					<h5 class="widget-title">Quick Links</h5>
+					<ul>
+						<li><a href="register.php">Register</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-lg-3 footer-widget pl-lg-5 pl-3">
+					<h5 class="widget-title">Follow Us</h5>
+					<div class="social">
+						<a href="" class="facebook"><i class="fa fa-facebook"></i></a>
+						<a href="" class="google"><i class="fa fa-google-plus"></i></a>
+						<a href="" class="instagram"><i class="fa fa-instagram"></i></a>
+						<a href="" class="twitter"><i class="fa fa-twitter"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<div class="row">
+					<div class="col-lg-4 store-links text-center text-lg-left pb-3 pb-lg-0">
+						<!--<a href=""><img src="img/appstore.png" alt="" class="mr-2"></a>
+						<a href=""><img src="img/playstore.png" alt=""></a>-->
+					</div>
+					<div class="col-lg-8 text-center text-lg-right">
+						<ul class="footer-nav">
+							<li><a href="">Terms of Use</a></li>
+							<li><a href="">Privacy Policy </a></li>
+							<li><a href="">cloudbrain@info.com</a></li>
+							<li><a href="">(123) 456-7890</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
